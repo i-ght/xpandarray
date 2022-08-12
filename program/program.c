@@ -1,5 +1,8 @@
 #include "xpandarray.h"
 
+enum {ZERO=0};
+enum {ERR=-1,OK=0};
+
 static void* _realloc(void* address, const size_t size)
 {
     if (ZERO == size) {
@@ -19,12 +22,12 @@ int main(void)
     xpandarray_construct(
         &array,
         sizeof(int),
-        0,
-        _realloc
+        _realloc,
+        free
     );
     
     for (int i = 0; i < 999; i++) {
-        if (ERR == xpandarray_add(&array, &i)) {
+        if (-1 == xpandarray_add(&array, &i)) {
             return ERR;
         }
     }

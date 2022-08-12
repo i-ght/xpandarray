@@ -1,19 +1,20 @@
 #include "xpandarray.h"
 
+enum {ZERO=0};
+enum {ERR=-1,OK=0};
+
 void xpandarray_construct(
     struct XpandArray* xpandarray,
     const size_t space_of_each_data_value,
-    const size_t initial_data_value_space,
-    const MemoryReallocate mem_realloc)
+    const MemoryReallocate mem_realloc,
+    const MemoryFree mem_free)
 {
 
-    const size_t initial_cap =
-        space_of_each_data_value * initial_data_value_space;
 
-    stream_construct(
+    continuum_construct(
         &xpandarray->data,
-        initial_cap,
-        mem_realloc
+        mem_realloc,
+        mem_free
     );
 
     xpandarray->single_data_value_space = space_of_each_data_value;
@@ -22,7 +23,7 @@ void xpandarray_construct(
 void xpandarray_destruct(
     struct XpandArray* xpandarray)
 {
-    stream_destruct(&xpandarray->data);
+    continuum_destruct(&xpandarray->data);
     xpandarray->single_data_value_space = 0;
     xpandarray->data_value_count = 0;
 
@@ -36,7 +37,7 @@ bool xpandarray_contains(
         if (ZERO == 
             memcmp(
                 data_value,
-                &xpandarray->data.buffer[i * xpandarray->single_data_value_space],
+                &xpandarray->data.spacetime[i * xpandarray->single_data_value_space],
                 xpandarray->single_data_value_space
             )
         ) {
@@ -49,12 +50,12 @@ bool xpandarray_contains(
 
 
 
-enum OKorERR xpandarray_add(
+int xpandarray_add(
     struct XpandArray* xpandarray,
-    void* data_value)
+    const void* data_value)
 {
     if (ERR ==
-        stream_write(
+        continuum_write(
             &xpandarray->data,
             (const char*)data_value,
             xpandarray->single_data_value_space

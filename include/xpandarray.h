@@ -2,7 +2,7 @@
 #define _XPANDARRAY_H_
 
 #include <stdlib.h>
-#include "stream.h"
+#include "continuum.h"
 
 #ifndef MEM_STREAM_MAX_BUFFER_SIZE
 #define MEM_STREAM_MAX_BUFFER_SIZE 1134903170U /* 1 gigabyte ~ 1,134 megabytes */
@@ -12,14 +12,14 @@ struct XpandArray
 {
     size_t data_value_count;
     size_t single_data_value_space;
-    struct Stream data;
+    struct Continuum data;
 };
 
 void xpandarray_construct(
     struct XpandArray* xpandarray,
-    const size_t size_of_each_data_value,
-    const size_t initial_buffer_size,
-    const MemoryReallocate mem_realloc
+    const size_t space_of_each_data_value,
+    const MemoryReallocate mem_realloc,
+    const MemoryFree mem_free
 );
 
 void xpandarray_destruct(
@@ -31,9 +31,9 @@ bool xpandarray_contains(
     const void* data_value
 );
 
-enum OKorERR xpandarray_add(
+int xpandarray_add(
     struct XpandArray* xpandarray,
-    void* data_value
+    const void* data_value
 );
 
 

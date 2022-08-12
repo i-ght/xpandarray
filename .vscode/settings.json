@@ -26,6 +26,7 @@
         "limits": "cpp",
         "xpandarray.h": "c",
         "stream.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "continuum.h": "c"
     }
 }
