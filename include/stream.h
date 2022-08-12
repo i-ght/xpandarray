@@ -72,13 +72,13 @@ enum OKorERR stream_write_cstr(
     const char c_str[]
 );
 
-ptrdiff_t stream_length(
+size_t stream_length(
     const struct Stream* stream
 );
 
 enum OKorERR stream_set_write_pos(
     struct Stream* stream,
-    const ptrdiff_t write_pos
+    const size_t write_pos
 );
 
 enum OKorERR stream_copy_buffer(

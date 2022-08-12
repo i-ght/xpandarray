@@ -29,7 +29,7 @@ int main(void)
         }
     }
 
-    int i0 = 0;
+    int i0 = 998;
     bool a = xpandarray_contains(&array, &i0);
     int i1 = 1000;
     bool b = xpandarray_contains(&array, &i1);

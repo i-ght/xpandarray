@@ -85,8 +85,6 @@ enum OKorERR stream_write(
     ptrdiff_t remaining_space =
         stream->space - stream->length;
 
-
-
     while (remaining_space < required_space) {
 
         /* acquisition more space */
@@ -104,7 +102,11 @@ enum OKorERR stream_write(
     }
 
     const ptrdiff_t i = stream->length;
-    void* dest = &stream->buffer[i];
+    if (i < 0) {
+        return ERR;
+    }
+
+    void* dest = (void*)&stream->buffer[i];
     const void* _ =
         memmove(
             dest,
@@ -129,7 +131,7 @@ enum OKorERR stream_write_cstr(
         );
 }
 
-ptrdiff_t stream_length(
+size_t stream_length(
     const struct Stream* stream)
 {
     return stream->length;
@@ -137,7 +139,7 @@ ptrdiff_t stream_length(
 
 enum OKorERR stream_set_write_pos(
     struct Stream* stream,
-    const ptrdiff_t write_pos)
+    const size_t write_pos)
 {
     if (write_pos >= stream->space) {
         return ERR;
