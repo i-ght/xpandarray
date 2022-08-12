@@ -4,10 +4,6 @@
 #include <stdlib.h>
 #include "continuum.h"
 
-#ifndef MEM_STREAM_MAX_BUFFER_SIZE
-#define MEM_STREAM_MAX_BUFFER_SIZE 1134903170U /* 1 gigabyte ~ 1,134 megabytes */
-#endif
-
 struct XpandArray
 {
     size_t data_value_count;

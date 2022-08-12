@@ -9,8 +9,6 @@ void xpandarray_construct(
     const MemoryReallocate mem_realloc,
     const MemoryFree mem_free)
 {
-
-
     continuum_construct(
         &xpandarray->data,
         mem_realloc,
