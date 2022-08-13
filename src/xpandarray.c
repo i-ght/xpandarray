@@ -35,7 +35,9 @@ bool xpandarray_contains(
         if (ZERO == 
             memcmp(
                 data_value,
-                &xpandarray->data.spacetime[i * xpandarray->single_data_value_space],
+                &xpandarray->data.spacetime[
+                    i * xpandarray->single_data_value_space
+                ],
                 xpandarray->single_data_value_space
             )
         ) {
@@ -45,8 +47,6 @@ bool xpandarray_contains(
 
     return false;
 }
-
-
 
 int xpandarray_add(
     struct XpandArray* xpandarray,

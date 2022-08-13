@@ -13,7 +13,7 @@ done
 
 ar rcs bin/libxpandarray.a $doto_files
 
-clang -g -shared -o bin/libxpandarray.so $doto_files 
+clang -g -shared -o bin/libxpandarray.so $doto_files $LFLAGS $CFLAGS
 
 clang -g -o bin/program program/program.c $LFLAGS $CFLAGS
 
