@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include "continuum.h"
 
+typedef bool (*XpandArrayPredicate)(
+    const void* value,
+    const size_t value_length,
+    const void* user_data
+);
+
 struct XpandArray
 {
     size_t data_value_count;
@@ -32,5 +38,11 @@ int xpandarray_add(
     const void* data_value
 );
 
+bool xpandarray_tryfind(
+    struct XpandArray* xpandarray,
+    const XpandArrayPredicate predicate,
+    const void* user_data,
+    void** value
+);
 
 #endif

@@ -27,26 +27,64 @@ void xpandarray_destruct(
 
 }
 
-bool xpandarray_contains(
+bool xpandarray_tryfind(
     struct XpandArray* xpandarray,
-    const void* data_value)
+    const XpandArrayPredicate predicate,
+    const void* user_data,
+    void** value)
 {
     for (ptrdiff_t i = 0; i < xpandarray->data_value_count; i++) {
-        if (ZERO == 
-            memcmp(
-                data_value,
-                &xpandarray->data.spacetime[
-                    i * xpandarray->single_data_value_space
-                ],
-                xpandarray->single_data_value_space
+        const ptrdiff_t index = 
+            i * xpandarray->single_data_value_space;
+        void* val = &xpandarray->data.spacetime[index];
+        if (predicate(
+                val,
+                xpandarray->single_data_value_space,
+                user_data
             )
         ) {
+            if (NULL != value) {
+                *value = val;
+            }
             return true;
         }
+
     }
 
     return false;
 }
+
+static bool value_is_equal(
+    const void* array_value,
+    const size_t array_value_length,
+    const void* user_data)
+{
+    if (ZERO == 
+        memcmp(
+            array_value,
+            user_data,
+            array_value_length
+        )
+    ) {
+        return true;
+    }
+    return false;
+}
+
+bool xpandarray_contains(
+    struct XpandArray* xpandarray,
+    const void* data_value)
+{
+    return xpandarray_tryfind(
+        xpandarray,
+        value_is_equal,
+        data_value,
+        NULL
+    );
+
+}
+
+
 
 int xpandarray_add(
     struct XpandArray* xpandarray,

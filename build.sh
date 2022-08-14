@@ -18,3 +18,22 @@ clang -g -shared -o bin/libxpandarray.so $doto_files $LFLAGS $CFLAGS
 clang -g -o bin/program program/program.c $LFLAGS $CFLAGS
 
 rm ./src/*.c.o
+
+install='install'
+uninstall='uninstall'
+
+case "$1" in
+  "$install")
+    cp bin/libxpandarray.so ~/.local/lib/
+    cp bin/libxpandarray.a ~/.local/lib/
+    cp include/xpandarray.h ~/.local/include
+  ;;
+  "$uninstall")
+    rm ~/.local/lib/libxpandarray.so
+    rm ~/.local/lib/libxpandarray.a
+    rm ~/.local/include/xpandarray.h
+  ;;
+  *)
+    
+  ;;
+esac
